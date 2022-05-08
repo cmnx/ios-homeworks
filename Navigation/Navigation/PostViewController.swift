@@ -13,7 +13,7 @@ struct Post {
 
 class PostViewController: UIViewController {
 
-    var titleOfThePost: String = "Post title"
+    var titleOfThePost: String? = "Post"
 
     override func viewDidLoad() {
         super.viewDidLoad()

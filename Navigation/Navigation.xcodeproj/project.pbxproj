@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0427C5A8282677DE00CB7468 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0427C5A7282677DE00CB7468 /* ProfileHeaderView.swift */; };
 		042F0CCD2824053F00BA0853 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042F0CCC2824053F00BA0853 /* SceneDelegate.swift */; };
 		043696372821D2BE00BF5D3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043696362821D2BE00BF5D3E /* AppDelegate.swift */; };
-		0436963B2821D2BE00BF5D3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436963A2821D2BE00BF5D3E /* ViewController.swift */; };
 		043696402821D2BF00BF5D3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0436963F2821D2BF00BF5D3E /* Assets.xcassets */; };
 		043696432821D2BF00BF5D3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 043696412821D2BF00BF5D3E /* LaunchScreen.storyboard */; };
 		0436964B2821D75100BF5D3E /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436964A2821D75100BF5D3E /* TabBarViewController.swift */; };
@@ -20,10 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0427C5A7282677DE00CB7468 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		042F0CCC2824053F00BA0853 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		043696332821D2BE00BF5D3E /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		043696362821D2BE00BF5D3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0436963A2821D2BE00BF5D3E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0436963F2821D2BF00BF5D3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		043696422821D2BF00BF5D3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		043696442821D2BF00BF5D3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -45,9 +45,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0427C5A62826774200CB7468 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				043696522821E47B00BF5D3E /* ProfileViewController.swift */,
+				0427C5A7282677DE00CB7468 /* ProfileHeaderView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		0436962A2821D2BE00BF5D3E = {
 			isa = PBXGroup;
 			children = (
+				0427C5A62826774200CB7468 /* Profile */,
 				043696352821D2BE00BF5D3E /* Navigation */,
 				043696342821D2BE00BF5D3E /* Products */,
 			);
@@ -70,8 +80,6 @@
 				043696542821E55100BF5D3E /* PostViewController.swift */,
 				0436965628228B4900BF5D3E /* InfoViewController.swift */,
 				043696502821E45A00BF5D3E /* FeedViewController.swift */,
-				043696522821E47B00BF5D3E /* ProfileViewController.swift */,
-				0436963A2821D2BE00BF5D3E /* ViewController.swift */,
 				0436963F2821D2BF00BF5D3E /* Assets.xcassets */,
 				043696412821D2BF00BF5D3E /* LaunchScreen.storyboard */,
 				043696442821D2BF00BF5D3E /* Info.plist */,
@@ -150,9 +158,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				043696552821E55100BF5D3E /* PostViewController.swift in Sources */,
-				0436963B2821D2BE00BF5D3E /* ViewController.swift in Sources */,
 				0436964B2821D75100BF5D3E /* TabBarViewController.swift in Sources */,
 				0436965728228B4900BF5D3E /* InfoViewController.swift in Sources */,
+				0427C5A8282677DE00CB7468 /* ProfileHeaderView.swift in Sources */,
 				043696532821E47B00BF5D3E /* ProfileViewController.swift in Sources */,
 				043696512821E45A00BF5D3E /* FeedViewController.swift in Sources */,
 				043696372821D2BE00BF5D3E /* AppDelegate.swift in Sources */,

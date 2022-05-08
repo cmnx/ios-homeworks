@@ -9,9 +9,6 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
 
-    let feedVC = FeedViewController()
-    let profileVC = ProfileViewController()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupControllers()
@@ -19,15 +16,20 @@ class TabBarViewController: UITabBarController {
     }
     
     private func setupControllers() {
-        
+        let feedVC = FeedViewController()
+        let profileVC = ProfileViewController()
         let feedNC = UINavigationController(rootViewController: feedVC)
         let profileNC = UINavigationController(rootViewController: profileVC)
+        
         feedVC.tabBarItem.title = "Feed"
         feedVC.tabBarItem.image = UIImage(systemName: "text.bubble")
-        feedVC.navigationItem.title = "Feed"
         profileVC.tabBarItem.title = "Profile"
         profileVC.tabBarItem.image = UIImage(systemName: "person")
+        feedVC.navigationItem.title = "Feed"
         profileVC.navigationItem.title = "Profile"
+        
+        feedNC.navigationBar.backgroundColor = .white
+        profileNC.navigationBar.backgroundColor = .white
         
         viewControllers = [feedNC, profileNC]
     }
