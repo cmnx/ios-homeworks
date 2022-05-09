@@ -11,9 +11,9 @@ class ProfileHeaderView: UIView {
         
     private var statusText: String?
     
-    let profileImage: UIImageView = {
+    private let profileImage: UIImageView = {
         let profileImage = UIImageView()
-        profileImage.frame = CGRect(x: 16, y: 16, width: 150, height: 150)
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
         profileImage.backgroundColor = .white
         profileImage.image = UIImage(named: "cat_mustache")
         profileImage.contentMode = .scaleAspectFit
@@ -25,9 +25,9 @@ class ProfileHeaderView: UIView {
         return profileImage
     }()
     
-    let profileName: UILabel = {
+    private let profileName: UILabel = {
         let profileName = UILabel()
-        profileName.frame = CGRect(x: UIScreen.main.bounds.width/2, y: 27, width: (UIScreen.main.bounds.width/2)-10, height: 30)
+        profileName.translatesAutoresizingMaskIntoConstraints = false
         profileName.text = "Hipster Cat"
         profileName.textAlignment = .left
         profileName.textColor = .black
@@ -35,9 +35,9 @@ class ProfileHeaderView: UIView {
         return profileName
     }()
     
-    var profileStatus: UILabel = {
+    private var profileStatus: UILabel = {
         var profileStatus = UILabel()
-        profileStatus.frame = CGRect(x: UIScreen.main.bounds.width/2, y: 118, width: (UIScreen.main.bounds.width/2)-16, height: 30)
+        profileStatus.translatesAutoresizingMaskIntoConstraints = false
         profileStatus.text = "Waiting for something..."
         profileStatus.textAlignment = .left
         profileStatus.textColor = .gray
@@ -45,9 +45,9 @@ class ProfileHeaderView: UIView {
         return profileStatus
     }()
     
-    let profileStatusNew: UITextField = {
+    private lazy var profileStatusNew: UITextField = {
         let textField = UITextField()
-        textField.frame = CGRect(x: UIScreen.main.bounds.width/2, y: 148, width: (UIScreen.main.bounds.width/2)-16, height: 40)
+        textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         textField.font = .systemFont(ofSize: 15, weight: .regular)
         textField.textColor = .black
@@ -62,9 +62,9 @@ class ProfileHeaderView: UIView {
         return textField
     }()
     
-    let profileButtonStatusShow: UIButton = {
+    private lazy var profileButtonStatus: UIButton = {
         let button = UIButton()
-        button.frame = CGRect(x: 16, y: 207, width: UIScreen.main.bounds.width-32, height: 50)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Set status", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
@@ -77,29 +77,80 @@ class ProfileHeaderView: UIView {
         button.addTarget(self, action: #selector(setStatus), for: .touchUpInside)
         return button
     }()
-
-    @objc func setStatus() {
+    
+    private lazy var profileButtonBottom: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Set new status", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .systemBlue
+        button.layer.cornerRadius = 4
+        button.layer.shadowColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0)
+        button.layer.shadowOffset.width = 4
+        button.layer.shadowOffset.height = 4
+        button.layer.shadowRadius = 4
+        button.layer.shadowOpacity = 0.7
+        button.addTarget(self, action: #selector(setStatus), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func setStatus() {
         profileStatus.text = statusText
         print(profileStatus.text ?? "")
-        
     }
     
-    @objc func statusTextChanged(_ textField: UITextField) {
+    @objc private func statusTextChanged(_ textField: UITextField) {
         statusText = profileStatusNew.text ?? ""
+    }
+    
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+//        statusText = profileStatusNew.text ?? ""
+//        setStatus()
+//        return true
+//    }
+    
+    private func additionViews() {
         
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-       textField.resignFirstResponder()
-       return true
-    }
-    
-    func additionViews() {
-        addSubview(profileImage)
-        addSubview(profileName)
-        addSubview(profileStatus)
-        addSubview(profileButtonStatusShow)
-        addSubview(profileStatusNew)
+        [profileImage,
+         profileName,
+         profileStatus,
+         profileStatusNew,
+         profileButtonStatus,
+         profileButtonBottom
+        ].forEach { addSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            profileImage.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            profileImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
+            profileImage.widthAnchor.constraint(equalToConstant: 150),
+            profileImage.heightAnchor.constraint(equalToConstant: 150),
+        //---
+            profileName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
+            profileName.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            profileName.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
+            profileName.heightAnchor.constraint(equalToConstant: 30),
+        //---
+            profileStatus.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
+            profileStatus.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            profileStatus.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 118),
+            profileStatus.heightAnchor.constraint(equalToConstant: 30),
+        //---
+            profileStatusNew.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
+            profileStatusNew.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            profileStatusNew.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 148),
+            profileStatusNew.heightAnchor.constraint(equalToConstant: 40),
+        //---
+            profileButtonStatus.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            profileButtonStatus.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            profileButtonStatus.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 207),
+            profileButtonStatus.heightAnchor.constraint(equalToConstant: 50),
+        //---
+            profileButtonBottom.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
+            profileButtonBottom.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
+            profileButtonBottom.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
+            profileButtonBottom.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
     override init(frame: CGRect){
