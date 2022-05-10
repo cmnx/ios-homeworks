@@ -17,7 +17,7 @@ class ProfileHeaderView: UIView {
         profileImage.backgroundColor = .white
         profileImage.image = UIImage(named: "cat_mustache")
         profileImage.contentMode = .scaleAspectFit
-        profileImage.layer.cornerRadius = 75
+        profileImage.layer.cornerRadius = 50
         profileImage.layer.borderColor = CGColor(red: 255.0, green: 255.0, blue: 255.0, alpha: 1.0)
         profileImage.layer.borderWidth = 3
         profileImage.clipsToBounds = true
@@ -47,6 +47,7 @@ class ProfileHeaderView: UIView {
     
     private lazy var profileStatusNew: UITextField = {
         let textField = UITextField()
+        textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
         textField.font = .systemFont(ofSize: 15, weight: .regular)
@@ -102,14 +103,7 @@ class ProfileHeaderView: UIView {
     @objc private func statusTextChanged(_ textField: UITextField) {
         statusText = profileStatusNew.text ?? ""
     }
-    
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
-//        statusText = profileStatusNew.text ?? ""
-//        setStatus()
-//        return true
-//    }
-    
+        
     private func additionViews() {
         
         [profileImage,
@@ -123,8 +117,8 @@ class ProfileHeaderView: UIView {
         NSLayoutConstraint.activate([
             profileImage.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             profileImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 16),
-            profileImage.widthAnchor.constraint(equalToConstant: 150),
-            profileImage.heightAnchor.constraint(equalToConstant: 150),
+            profileImage.widthAnchor.constraint(equalToConstant: 100),
+            profileImage.heightAnchor.constraint(equalToConstant: 100),
         //---
             profileName.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
             profileName.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
@@ -133,23 +127,23 @@ class ProfileHeaderView: UIView {
         //---
             profileStatus.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
             profileStatus.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            profileStatus.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 118),
+            profileStatus.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 48),
             profileStatus.heightAnchor.constraint(equalToConstant: 30),
         //---
             profileStatusNew.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
             profileStatusNew.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            profileStatusNew.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 148),
+            profileStatusNew.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 78),
             profileStatusNew.heightAnchor.constraint(equalToConstant: 40),
         //---
             profileButtonStatus.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor, constant: 16),
             profileButtonStatus.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            profileButtonStatus.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 207),
+            profileButtonStatus.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 137),
             profileButtonStatus.heightAnchor.constraint(equalToConstant: 50),
         //---
             profileButtonBottom.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             profileButtonBottom.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             profileButtonBottom.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor),
-            profileButtonBottom.heightAnchor.constraint(equalToConstant: 50)
+            profileButtonBottom.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -161,4 +155,13 @@ class ProfileHeaderView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+extension ProfileHeaderView: UITextFieldDelegate {
+
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            self.endEditing(true)
+            self.profileStatus.text = textField.text
+            return true
+        }
 }
