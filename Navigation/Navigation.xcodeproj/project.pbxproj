@@ -17,6 +17,7 @@
 		043696532821E47B00BF5D3E /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043696522821E47B00BF5D3E /* ProfileViewController.swift */; };
 		043696552821E55100BF5D3E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043696542821E55100BF5D3E /* PostViewController.swift */; };
 		0436965728228B4900BF5D3E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436965628228B4900BF5D3E /* InfoViewController.swift */; };
+		046163A7282BDCB700466E79 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046163A6282BDCB700466E79 /* LogInViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		043696522821E47B00BF5D3E /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		043696542821E55100BF5D3E /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		0436965628228B4900BF5D3E /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		046163A6282BDCB700466E79 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +52,7 @@
 			children = (
 				043696522821E47B00BF5D3E /* ProfileViewController.swift */,
 				0427C5A7282677DE00CB7468 /* ProfileHeaderView.swift */,
+				046163A6282BDCB700466E79 /* LogInViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 			files = (
 				043696552821E55100BF5D3E /* PostViewController.swift in Sources */,
 				0436964B2821D75100BF5D3E /* TabBarViewController.swift in Sources */,
+				046163A7282BDCB700466E79 /* LogInViewController.swift in Sources */,
 				0436965728228B4900BF5D3E /* InfoViewController.swift in Sources */,
 				0427C5A8282677DE00CB7468 /* ProfileHeaderView.swift in Sources */,
 				043696532821E47B00BF5D3E /* ProfileViewController.swift in Sources */,
