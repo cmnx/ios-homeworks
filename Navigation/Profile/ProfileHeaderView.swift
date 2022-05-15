@@ -63,7 +63,7 @@ class ProfileHeaderView: UIView {
         return profileStatus
     }()
     
-    lazy var profileStatusNew: UITextField = {
+    private lazy var profileStatusNew: UITextField = {
         let textField = UITextField()
         textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -124,6 +124,8 @@ class ProfileHeaderView: UIView {
         
 // MARK: - layout
     
+    let viewHeight: CGFloat = 220
+    
     private func additionViews() {
         
         [backgndView,
@@ -139,7 +141,7 @@ class ProfileHeaderView: UIView {
             backgndView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
             backgndView.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor),
             backgndView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            backgndView.heightAnchor.constraint(equalToConstant: 220),
+            backgndView.heightAnchor.constraint(equalToConstant: viewHeight),
         //---
             profileImage.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor, constant: 16),
             profileImage.topAnchor.constraint(equalTo: backgndView.topAnchor, constant: 16),

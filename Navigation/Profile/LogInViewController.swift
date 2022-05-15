@@ -160,7 +160,8 @@ class LogInViewController: UIViewController {
     
     @objc private func login() {
         let profileVC = ProfileViewController()
-        present(profileVC, animated: true)
+        //present(profileVC, animated: true)
+        navigationController?.pushViewController(profileVC, animated: true)
     }
     
     private let nc = NotificationCenter.default
