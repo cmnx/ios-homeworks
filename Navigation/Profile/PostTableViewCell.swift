@@ -18,7 +18,7 @@ class PostTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func config(_ post: ProfileViewController.PostStruct) {
+    func config(_ post: PostStruct) {
         postAuthor.text = post.author
         postImage.image = post.image
         postDescription.text = post.description
@@ -51,7 +51,6 @@ class PostTableViewCell: UITableViewCell {
             postAuthor.topAnchor.constraint(equalTo: backgndView.topAnchor, constant: inset),
             postAuthor.bottomAnchor.constraint(equalTo: postImage.topAnchor, constant: -inset),
         //---
-            //postImage.leftAnchor.constraint(equalTo: backgndView.leftAnchor),
             postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             postImage.heightAnchor.constraint(equalTo: contentView.widthAnchor),
         // ---
