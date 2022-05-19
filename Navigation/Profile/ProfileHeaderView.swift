@@ -21,6 +21,8 @@ class ProfileHeaderView: UIView {
 //MARK: - views
     
     private var statusText: String?
+    var blackoutViewPortrait = [NSLayoutConstraint]()
+    var blackoutViewLandscape = [NSLayoutConstraint]()
     
     private let backgndView: UIView = {
         let view = UIView()
@@ -28,8 +30,23 @@ class ProfileHeaderView: UIView {
         view.backgroundColor = .lightGray
         return view
     }()
+    
+    private lazy var blackoutView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black.withAlphaComponent(0.8)
+        view.isHidden = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(collapseProfileImage)))
+        return view
+    }()
+    
+    private let maskImageView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
            
-    private let profileImage: UIImageView = {
+    private lazy var profileImage: UIImageView = {
         let profileImage = UIImageView()
         profileImage.translatesAutoresizingMaskIntoConstraints = false
         profileImage.backgroundColor = .white
@@ -40,6 +57,8 @@ class ProfileHeaderView: UIView {
         profileImage.layer.borderWidth = 3
         profileImage.clipsToBounds = true
         profileImage.isUserInteractionEnabled = true
+        profileImage.isUserInteractionEnabled = true
+        profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(expandProfileImage)))
         return profileImage
     }()
     
@@ -73,11 +92,11 @@ class ProfileHeaderView: UIView {
         textField.layer.cornerRadius = 12
         textField.layer.borderWidth = 1
         textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1.0)
-        textField.placeholder = "Enter new status here"
         textField.addTarget(self, action: #selector(statusTextChanged(_ :)), for: .editingChanged)
         textField.leftView = UIView(frame: CGRect(x: 0, y: 10, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         textField.clearButtonMode = .whileEditing
+        statusText = ""
         return textField
     }()
     
@@ -96,14 +115,104 @@ class ProfileHeaderView: UIView {
         button.addTarget(self, action: #selector(setStatus), for: .touchUpInside)
         return button
     }()
+        
+    private lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let confImageButton = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
+        button.setImage(UIImage(systemName: "xmark", withConfiguration: confImageButton)?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(collapseProfileImage), for: .touchUpInside)
+        return button
+    }()
+    
+// MARK: - functions - text field
     
     @objc private func setStatus() {
-        profileStatus.text = statusText
+        if statusText == "" {
+            profileStatusNew.attributedPlaceholder = NSAttributedString(
+                string: "Cannot be empty!",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            profileStatusNew.text = ""
+        } else {
+            profileStatusNew.attributedPlaceholder = NSAttributedString(
+                string: "Enter new status here",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
+            profileStatus.text = statusText
+            profileStatusNew.text = ""
+            statusText = ""
+        }
         print(profileStatus.text ?? "")
     }
     
     @objc private func statusTextChanged(_ textField: UITextField) {
         statusText = profileStatusNew.text ?? ""
+    }
+    
+// MARK: - functions - gestures
+    
+    @objc private func expandProfileImage() {
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.1,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.2,
+                       options: .curveEaseInOut) {
+            
+            self.blackoutView.isHidden = false
+            
+            self.profileImage.layer.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            
+            var size: CGFloat = 0
+            
+            if UIDevice.current.orientation.isPortrait {
+                
+                self.profileImage.layer.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+                
+                size = UIScreen.main.bounds.width
+                self.profileImage.layer.bounds = CGRect(x: 0, y: 0, width: size, height: size)
+                
+                NSLayoutConstraint.deactivate(self.blackoutViewLandscape)
+                NSLayoutConstraint.activate(self.blackoutViewPortrait)
+                   
+            } else {
+                
+                self.profileImage.layer.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY - 30)
+                
+                size = UIScreen.main.bounds.height - 80
+                self.profileImage.layer.bounds = CGRect(x: 0, y: 0, width: size, height: size)
+                
+                NSLayoutConstraint.deactivate(self.blackoutViewPortrait)
+                NSLayoutConstraint.activate(self.blackoutViewLandscape)
+               
+            }
+            
+            self.profileImage.layer.cornerRadius = 0
+            self.layoutIfNeeded()
+        
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3,
+                           animations: {
+                self.closeButton.backgroundColor = .red.withAlphaComponent(1)
+            })
+        }
+    }
+
+    @objc private func collapseProfileImage(){
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.1,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.2,
+                       options: .curveEaseInOut) {
+            
+            self.blackoutView.isHidden = true
+            
+            self.profileImage.layer.position = self.maskImageView.layer.position
+            self.profileImage.layer.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
+            self.profileImage.layer.cornerRadius = self.profileImage.bounds.width / 2
+            
+            self.layoutIfNeeded()
+        }
     }
         
 // MARK: - layout
@@ -113,12 +222,31 @@ class ProfileHeaderView: UIView {
     private func additionViews() {
         
         [backgndView,
-         profileImage,
          profileName,
          profileStatus,
          profileStatusNew,
-         profileButtonStatus
+         profileButtonStatus,
+         blackoutView,
+         maskImageView,
+         profileImage
         ].forEach { addSubview($0) }
+        
+        blackoutView.addSubview(closeButton)
+        
+        blackoutViewPortrait = [
+            blackoutView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            blackoutView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+            closeButton.topAnchor.constraint(equalTo: blackoutView.topAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: blackoutView.trailingAnchor)
+        ]
+        blackoutViewLandscape = [
+            blackoutView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+            blackoutView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            closeButton.topAnchor.constraint(equalTo: blackoutView.topAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: blackoutView.trailingAnchor, constant: -100)
+        ]
+        
+        NSLayoutConstraint.activate(blackoutViewPortrait)
         
         NSLayoutConstraint.activate([
             backgndView.leadingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leadingAnchor),
@@ -149,18 +277,38 @@ class ProfileHeaderView: UIView {
             profileButtonStatus.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor, constant: 16),
             profileButtonStatus.trailingAnchor.constraint(equalTo: backgndView.trailingAnchor, constant: -16),
             profileButtonStatus.topAnchor.constraint(equalTo: backgndView.topAnchor, constant: 137),
-            profileButtonStatus.heightAnchor.constraint(equalToConstant: 50)
+            profileButtonStatus.heightAnchor.constraint(equalToConstant: 50),
+        //---
+            maskImageView.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor, constant: 16),
+            maskImageView.topAnchor.constraint(equalTo: backgndView.topAnchor, constant: 16),
+            maskImageView.widthAnchor.constraint(equalToConstant: 100),
+            maskImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
 }
 
+// MARK: - extensions
+
 extension ProfileHeaderView: UITextFieldDelegate {
 
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            self.endEditing(true)
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        
+        if self.statusText == "" {
+            self.profileStatusNew.attributedPlaceholder = NSAttributedString(
+                string: "Cannot be empty!",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            self.profileStatusNew.text = ""
+        } else {
+            self.profileStatusNew.attributedPlaceholder = NSAttributedString(
+                string: "Enter new status here",
+                attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
             self.profileStatus.text = textField.text
-            return true
+            self.profileStatusNew.text = ""
+            self.statusText = ""
         }
+        return true
+    }
 }
 
 

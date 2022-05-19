@@ -59,6 +59,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		041A618D2834F01500FF65D5 /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				040734872832FD3D0003E364 /* PhotosViewController.swift */,
+				04073485283275AA0003E364 /* PhotosTableViewCell.swift */,
+				04E9A9E928345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift */,
+				04073489283302F10003E364 /* PhotosCollectionViewCell.swift */,
+			);
+			path = Photo;
+			sourceTree = "<group>";
+		};
 		0427C5A62826774200CB7468 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,11 +84,8 @@
 		0436962A2821D2BE00BF5D3E = {
 			isa = PBXGroup;
 			children = (
-				04073485283275AA0003E364 /* PhotosTableViewCell.swift */,
-				040734872832FD3D0003E364 /* PhotosViewController.swift */,
 				04E9A9E7283449F8004CD155 /* Data.swift */,
-				04073489283302F10003E364 /* PhotosCollectionViewCell.swift */,
-				04E9A9E928345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift */,
+				041A618D2834F01500FF65D5 /* Photo */,
 				0427C5A62826774200CB7468 /* Profile */,
 				043696352821D2BE00BF5D3E /* Navigation */,
 				043696342821D2BE00BF5D3E /* Products */,

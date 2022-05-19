@@ -30,6 +30,8 @@ class PhotosHorizontalCollectionViewCell: UICollectionViewCell {
             img.topAnchor.constraint(equalTo: contentView.topAnchor),
             img.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             img.heightAnchor.constraint(equalTo: img.widthAnchor)
+            //img.widthAnchor.constraint(equalToConstant:
+                                        //(UIScreen.main.bounds.width - 12 * 2 - 8 * 3) / 4)
         ])
     }
 }
