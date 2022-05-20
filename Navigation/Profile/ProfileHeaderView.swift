@@ -97,22 +97,6 @@ class ProfileHeaderView: UIView {
         return button
     }()
     
-    private lazy var profileButtonBottom: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Set new status", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 4
-        button.layer.shadowColor = CGColor(red: 0, green: 0, blue: 0, alpha: 0)
-        button.layer.shadowOffset.width = 4
-        button.layer.shadowOffset.height = 4
-        button.layer.shadowRadius = 4
-        button.layer.shadowOpacity = 0.7
-        button.addTarget(self, action: #selector(setStatus), for: .touchUpInside)
-        return button
-    }()
-    
     @objc private func setStatus() {
         profileStatus.text = statusText
         print(profileStatus.text ?? "")
@@ -133,8 +117,7 @@ class ProfileHeaderView: UIView {
          profileName,
          profileStatus,
          profileStatusNew,
-         profileButtonStatus,
-         profileButtonBottom
+         profileButtonStatus
         ].forEach { addSubview($0) }
         
         NSLayoutConstraint.activate([
@@ -166,12 +149,7 @@ class ProfileHeaderView: UIView {
             profileButtonStatus.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor, constant: 16),
             profileButtonStatus.trailingAnchor.constraint(equalTo: backgndView.trailingAnchor, constant: -16),
             profileButtonStatus.topAnchor.constraint(equalTo: backgndView.topAnchor, constant: 137),
-            profileButtonStatus.heightAnchor.constraint(equalToConstant: 50),
-        //---
-            profileButtonBottom.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor),
-            profileButtonBottom.trailingAnchor.constraint(equalTo: backgndView.trailingAnchor),
-            profileButtonBottom.bottomAnchor.constraint(equalTo: backgndView.bottomAnchor),
-            profileButtonBottom.heightAnchor.constraint(equalToConstant: 30)
+            profileButtonStatus.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
