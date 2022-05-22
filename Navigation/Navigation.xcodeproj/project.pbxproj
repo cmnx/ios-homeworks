@@ -22,6 +22,9 @@
 		043696552821E55100BF5D3E /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043696542821E55100BF5D3E /* PostViewController.swift */; };
 		0436965728228B4900BF5D3E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0436965628228B4900BF5D3E /* InfoViewController.swift */; };
 		046163A7282BDCB700466E79 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046163A6282BDCB700466E79 /* LogInViewController.swift */; };
+		04751BA428379AFE00046495 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04751BA328379AFE00046495 /* extensions.swift */; };
+		04751BA6283812B500046495 /* protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04751BA5283812B500046495 /* protocols.swift */; };
+		04945811283991DB0048C700 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04945810283991DB0048C700 /* PostDetailsViewController.swift */; };
 		04E9A9E8283449F8004CD155 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E9A9E7283449F8004CD155 /* Data.swift */; };
 		04E9A9EA28345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E9A9E928345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +47,9 @@
 		043696542821E55100BF5D3E /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		0436965628228B4900BF5D3E /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		046163A6282BDCB700466E79 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		04751BA328379AFE00046495 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = SOURCE_ROOT; };
+		04751BA5283812B500046495 /* protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocols.swift; sourceTree = SOURCE_ROOT; };
+		04945810283991DB0048C700 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostDetailsViewController.swift; path = Navigation/PostDetailsViewController.swift; sourceTree = SOURCE_ROOT; };
 		04E9A9E7283449F8004CD155 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		04E9A9E928345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosHorizontalCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -73,6 +79,7 @@
 		0427C5A62826774200CB7468 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				04945810283991DB0048C700 /* PostDetailsViewController.swift */,
 				043696522821E47B00BF5D3E /* ProfileViewController.swift */,
 				042A3E4D2831220200FDB657 /* PostTableViewCell.swift */,
 				0427C5A7282677DE00CB7468 /* ProfileHeaderView.swift */,
@@ -85,6 +92,8 @@
 			isa = PBXGroup;
 			children = (
 				04E9A9E7283449F8004CD155 /* Data.swift */,
+				04751BA328379AFE00046495 /* extensions.swift */,
+				04751BA5283812B500046495 /* protocols.swift */,
 				041A618D2834F01500FF65D5 /* Photo */,
 				0427C5A62826774200CB7468 /* Profile */,
 				043696352821D2BE00BF5D3E /* Navigation */,
@@ -189,6 +198,7 @@
 				043696552821E55100BF5D3E /* PostViewController.swift in Sources */,
 				0436964B2821D75100BF5D3E /* TabBarViewController.swift in Sources */,
 				046163A7282BDCB700466E79 /* LogInViewController.swift in Sources */,
+				04945811283991DB0048C700 /* PostDetailsViewController.swift in Sources */,
 				04073486283275AA0003E364 /* PhotosTableViewCell.swift in Sources */,
 				0407348A283302F10003E364 /* PhotosCollectionViewCell.swift in Sources */,
 				04E9A9EA28345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift in Sources */,
@@ -197,7 +207,9 @@
 				04E9A9E8283449F8004CD155 /* Data.swift in Sources */,
 				043696532821E47B00BF5D3E /* ProfileViewController.swift in Sources */,
 				043696512821E45A00BF5D3E /* FeedViewController.swift in Sources */,
+				04751BA428379AFE00046495 /* extensions.swift in Sources */,
 				042A3E4E2831220200FDB657 /* PostTableViewCell.swift in Sources */,
+				04751BA6283812B500046495 /* protocols.swift in Sources */,
 				040734882832FD3D0003E364 /* PhotosViewController.swift in Sources */,
 				043696372821D2BE00BF5D3E /* AppDelegate.swift in Sources */,
 				042F0CCD2824053F00BA0853 /* SceneDelegate.swift in Sources */,
@@ -337,6 +349,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -363,6 +376,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

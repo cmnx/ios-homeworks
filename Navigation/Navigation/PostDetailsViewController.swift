@@ -1,21 +1,25 @@
 //
-//  PostTableViewCell.swift
+//  PostDetailsViewController.swift
 //  Navigation
 //
-//  Created by Constantin on 15.05.2022.
+//  Created by Constantin on 22.05.2022.
 //
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell {
+class PostDetailsViewController: UIViewController {
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         loadLayout()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    weak var postDetailsDelegate: PostDetailsDelegate?
+    
+    @objc private func postLike(_ sender: UITapGestureRecognizer) {
+        let incrementedLikes: Int = postDetailsDelegate?.incrementLikes() ?? 0
+        postLikes.text = "Likes: \(incrementedLikes)"
+        view.layoutIfNeeded()
     }
     
     func config(_ post: PostStruct) {
@@ -30,47 +34,67 @@ class PostTableViewCell: UITableViewCell {
     
     private func loadLayout() {
         
-        [backgndView,
-         postAuthor,
+        let inset: CGFloat = 16
+        
+        view.addSubview(scrollView)
+        
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        scrollView.addSubview(contentView)
+        
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: inset),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -inset),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -inset * 2)
+        ])
+        
+        [postAuthor,
          postImage,
          postDescription,
          postLikes,
          postViews
         ].forEach { contentView.addSubview($0) }
         
-        let inset: CGFloat = 16
-        
         NSLayoutConstraint.activate([
-            backgndView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
-            backgndView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
-            backgndView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            backgndView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-        //---
-            postAuthor.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor, constant: inset),
-            postAuthor.trailingAnchor.constraint(equalTo: backgndView.trailingAnchor, constant: -inset),
-            postAuthor.topAnchor.constraint(equalTo: backgndView.topAnchor, constant: inset),
+            postAuthor.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
+            postAuthor.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
+            postAuthor.topAnchor.constraint(equalTo: contentView.topAnchor, constant: inset),
             postAuthor.bottomAnchor.constraint(equalTo: postImage.topAnchor, constant: -inset),
         //---
             postImage.widthAnchor.constraint(equalTo: contentView.widthAnchor),
             postImage.heightAnchor.constraint(equalTo: contentView.widthAnchor),
         // ---
-            postDescription.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor, constant: inset),
-            postDescription.trailingAnchor.constraint(equalTo: backgndView.trailingAnchor, constant: -inset),
+            postDescription.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
+            postDescription.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
             postDescription.topAnchor.constraint(equalTo: postImage.bottomAnchor, constant: inset),
             postDescription.bottomAnchor.constraint(equalTo: postLikes.topAnchor, constant: -inset),
         //---
-            postLikes.leadingAnchor.constraint(equalTo: backgndView.leadingAnchor, constant: inset),
+            postLikes.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: inset),
             postLikes.topAnchor.constraint(equalTo: postViews.topAnchor),
             postLikes.bottomAnchor.constraint(equalTo: postViews.bottomAnchor),
         //---
-            postViews.trailingAnchor.constraint(equalTo: backgndView.trailingAnchor, constant: -inset),
-            postViews.bottomAnchor.constraint(equalTo: backgndView.bottomAnchor, constant: -inset)
+            postViews.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -inset),
+            postViews.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
         ])
     }
     
 // MARK: - views
+        
+    private var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.backgroundColor = .white
+        return scrollView
+    }()
     
-    private let backgndView: UIView = {
+    private let contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -106,12 +130,14 @@ class PostTableViewCell: UITableViewCell {
         return label
     }()
     
-    var postLikes: UILabel = {
+    lazy var postLikes: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 16, weight: .regular)
         label.textColor = .black
         label.text = "0"
+        label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(postLike(_:))))
+        label.isUserInteractionEnabled = true
         return label
     }()
     

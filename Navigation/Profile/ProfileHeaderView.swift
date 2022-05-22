@@ -57,7 +57,6 @@ class ProfileHeaderView: UIView {
         profileImage.layer.borderWidth = 3
         profileImage.clipsToBounds = true
         profileImage.isUserInteractionEnabled = true
-        profileImage.isUserInteractionEnabled = true
         profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(expandProfileImage)))
         return profileImage
     }()
@@ -310,5 +309,3 @@ extension ProfileHeaderView: UITextFieldDelegate {
         return true
     }
 }
-
-

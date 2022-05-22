@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol PhotoGalleryDelegate: AnyObject {
-    func openPhotoGallery()
-}
-
 class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -33,13 +29,41 @@ class ProfileViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
-    private let post: [PostStruct] = PostStruct.assemblingPosts()
+    private var post: [PostStruct] = PostStruct.assemblingPosts()
+    private var tableIndex: IndexPath = IndexPath()
+    var blackoutViewPortrait = [NSLayoutConstraint]()
+    var blackoutViewLandscape = [NSLayoutConstraint]()
     
 // MARK: - layout
     
     private func loadLayout() {
         
         view.addSubview(tableView)
+        
+        view.addSubview(blackoutView)
+        blackoutView.addSubview(closeButton)
+        blackoutView.addSubview(imageTableView)
+        
+        blackoutViewPortrait = [
+            blackoutView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            blackoutView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+            closeButton.topAnchor.constraint(equalTo: blackoutView.topAnchor, constant: 30),
+            closeButton.trailingAnchor.constraint(equalTo: blackoutView.trailingAnchor, constant: -10),
+            imageTableView.centerXAnchor.constraint(equalTo: blackoutView.centerXAnchor),
+            imageTableView.centerYAnchor.constraint(equalTo: blackoutView.centerYAnchor),
+            imageTableView.widthAnchor.constraint(equalTo: imageTableView.heightAnchor),
+            imageTableView.heightAnchor.constraint(equalTo: blackoutView.widthAnchor)
+        ]
+        blackoutViewLandscape = [
+            blackoutView.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.height),
+            blackoutView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width),
+            closeButton.topAnchor.constraint(equalTo: blackoutView.topAnchor),
+            closeButton.trailingAnchor.constraint(equalTo: blackoutView.trailingAnchor, constant: -100),
+            imageTableView.centerXAnchor.constraint(equalTo: blackoutView.centerXAnchor),
+            imageTableView.centerYAnchor.constraint(equalTo: blackoutView.centerYAnchor),
+            imageTableView.widthAnchor.constraint(equalTo: imageTableView.heightAnchor),
+            imageTableView.heightAnchor.constraint(equalTo: blackoutView.widthAnchor)
+        ]
         
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -60,6 +84,32 @@ class ProfileViewController: UIViewController {
         tableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
         tableView.separatorInset = .init(top: 0, left: 16, bottom: 0, right: 16)
         return tableView
+    }()
+    
+    private var imageTableView: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage()
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
+    
+    private lazy var blackoutView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black.withAlphaComponent(0.8)
+        view.isHidden = true
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(collapseImage)))
+        return view
+    }()
+    
+    private lazy var closeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let confImageButton = UIImage.SymbolConfiguration(pointSize: 30, weight: .bold, scale: .large)
+        button.setImage(UIImage(systemName: "xmark", withConfiguration: confImageButton)?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
+        button.addTarget(self, action: #selector(collapseImage), for: .touchUpInside)
+        return button
     }()
 }
 
@@ -86,6 +136,22 @@ extension ProfileViewController: UITableViewDelegate {
             return .zero
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
+        
+        tableIndex = indexPath
+        
+        post[indexPath.row].views += 1
+        cell.postViews.text = "Views: \(post[indexPath.row].views)"
+        
+        let postDetailsVC = PostDetailsViewController()
+        postDetailsVC.config(post[indexPath.row])
+        postDetailsVC.postDetailsDelegate = self
+        present(postDetailsVC, animated: true)
+        
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
 }
 
 // MARK: - table view data source
@@ -108,6 +174,7 @@ extension ProfileViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
             
             cell.photoGalleryDelegate = self
+            cell.photoCollectionDelegate = self
             
             return cell
         
@@ -118,7 +185,7 @@ extension ProfileViewController: UITableViewDataSource {
             cell.config(post[indexPath.row])
             
             let selectionView = UIView()
-            selectionView.backgroundColor = .systemRed
+            selectionView.backgroundColor = .systemBlue.withAlphaComponent(0.5)
             cell.selectedBackgroundView = selectionView
             
             return cell
@@ -126,18 +193,89 @@ extension ProfileViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - identifier
-
-extension UIView {
-    static var identifier: String {
-        return String(describing: self)
-    }
-}
-
-// MARK: - delegate
+// MARK: - delegates
 
 extension ProfileViewController: PhotoGalleryDelegate {
+   
     func openPhotoGallery() {
         self.navigationController?.pushViewController(PhotosViewController(), animated: true)
     }
 }
+
+extension ProfileViewController: PostDetailsDelegate {
+
+    func incrementLikes() -> Int {
+        post[tableIndex.row].likes += 1
+        tableView.reloadRows(at: [tableIndex], with: .fade)
+        return post[tableIndex.row].likes
+    }
+}
+
+extension ProfileViewController: PhotoCollectionDelegate {
+   
+    func expandPhoto(image: UIImage) {
+        
+        imageTableView.image = image
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.1,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.2,
+                       options: .curveEaseInOut) {
+            
+            self.tabBarController?.tabBar.isHidden = true
+            self.blackoutView.isHidden = false
+            
+            self.imageTableView.layer.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+            
+            var size: CGFloat = 0
+            
+            if UIDevice.current.orientation.isPortrait {
+                
+                self.imageTableView.layer.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+                
+                size = UIScreen.main.bounds.width
+                self.imageTableView.layer.bounds = CGRect(x: 0, y: 0, width: size, height: size)
+                
+                NSLayoutConstraint.deactivate(self.blackoutViewLandscape)
+                NSLayoutConstraint.activate(self.blackoutViewPortrait)
+                
+            } else {
+                
+                self.imageTableView.layer.position = CGPoint(x: UIScreen.main.bounds.midX, y: UIScreen.main.bounds.midY)
+                
+                size = UIScreen.main.bounds.height
+                self.imageTableView.layer.bounds = CGRect(x: 0, y: 0, width: size, height: size)
+                
+                NSLayoutConstraint.deactivate(self.blackoutViewPortrait)
+                NSLayoutConstraint.activate(self.blackoutViewLandscape)
+                
+            }
+            
+            self.view.layoutIfNeeded()
+            
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3,
+                           animations: {
+                self.closeButton.backgroundColor = .red.withAlphaComponent(1)
+            })
+        }
+    }
+
+    @objc private func collapseImage() {
+            
+        UIView.animate(withDuration: 0.5,
+                       delay: 0.1,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0.2,
+                       options: .curveEaseInOut) {
+                
+        self.blackoutView.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
+        self.view.layoutIfNeeded()
+        
+        }
+    }
+        
+}
+

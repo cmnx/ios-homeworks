@@ -18,6 +18,7 @@ var imageViewArray: [UIImageView] {
             image.translatesAutoresizingMaskIntoConstraints = false
             image.backgroundColor = .black
             image.contentMode = .scaleAspectFill
+            image.addGestureRecognizer(UITapGestureRecognizer())
             return image
         }()
     array.append(imageView)

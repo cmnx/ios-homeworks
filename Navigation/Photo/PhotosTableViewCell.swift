@@ -10,6 +10,7 @@ import UIKit
 class PhotosTableViewCell: UITableViewCell {
     
     weak var photoGalleryDelegate: PhotoGalleryDelegate?
+    weak var photoCollectionDelegate: PhotoCollectionDelegate?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -94,7 +95,7 @@ class PhotosTableViewCell: UITableViewCell {
     }()
     
     @objc private func openPhotoGallery() {
-        self.photoGalleryDelegate?.openPhotoGallery()        
+        photoGalleryDelegate?.openPhotoGallery()
     }
 }
 
@@ -141,5 +142,10 @@ extension PhotosTableViewCell: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        photoCollectionDelegate?.expandPhoto(image: imageViewArray[indexPath.item].image ?? UIImage(systemName: "xmark")!)
     }
 }
