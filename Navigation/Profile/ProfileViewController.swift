@@ -140,6 +140,8 @@ extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.dequeueReusableCell(withIdentifier: PostTableViewCell.identifier, for: indexPath) as! PostTableViewCell
         
+        guard indexPath.section != 0 else { return }
+        
         tableIndex = indexPath
         
         post[indexPath.row].views += 1
@@ -151,6 +153,26 @@ extension ProfileViewController: UITableViewDelegate {
         present(postDetailsVC, animated: true)
         
         tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        guard indexPath.section != 0 else { return nil }
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+            (action, sourceView, completionHandler) in
+            
+            self.tableView.beginUpdates()
+            self.post.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            self.tableView.endUpdates()
+            completionHandler(true)
+        }
+        
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
+        swipeConfiguration.performsFirstActionWithFullSwipe = true
+        
+        return swipeConfiguration
     }
 }
 
