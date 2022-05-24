@@ -8,7 +8,7 @@
 import UIKit
 
 class TabBarViewController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupControllers()
@@ -17,7 +17,7 @@ class TabBarViewController: UITabBarController {
     
     private func setupControllers() {
         let feedVC = FeedViewController()
-        let profileVC = ProfileViewController()
+        let profileVC = LogInViewController() //ProfileViewController()
         let feedNC = UINavigationController(rootViewController: feedVC)
         let profileNC = UINavigationController(rootViewController: profileVC)
         
@@ -30,6 +30,7 @@ class TabBarViewController: UITabBarController {
         
         feedNC.navigationBar.backgroundColor = .white
         profileNC.navigationBar.backgroundColor = .white
+        profileNC.navigationBar.isHidden = true
         
         viewControllers = [feedNC, profileNC]
     }

@@ -31,6 +31,17 @@
       "size" : "40x40"
     },
     {
+      "filename" : "icon.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "60x60"
+    },
+    {
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "60x60"
+    },
+    {
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
@@ -84,6 +95,17 @@
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "83.5x83.5"
+    },
+    {
+      "filename" : "1313504_company_logo_ios_apple_ipad_icon(1).png",
+      "idiom" : "ios-marketing",
+      "scale" : "1x",
+      "size" : "1024x1024"
+    },
+    {
+      "idiom" : "ios-marketing",
+      "scale" : "1x",
+      "size" : "1024x1024"
     },
     {
       "idiom" : "ios-marketing",
