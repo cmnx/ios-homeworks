@@ -250,6 +250,16 @@ class LogInViewController: UIViewController {
             passwordWarningLabel.isHidden = false
             return false
         }
+        let validator = ValidatorEmail()
+        guard validator.isValid(input: loginTF.text!) == true else {
+            
+            let alert = UIAlertController(title: "Incorrect email!", message: "\nPlease, check your email address.\n\nDemo account: \nLogin: \"user@vk.com\"\nPassword: \"12345678\"", preferredStyle: .alert)
+            
+            let alertOK = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(alertOK)
+            present(alert, animated: true)
+            return false
+        }
         guard (loginTF.text! == "user@vk.com" && passwordTF.text! == "12345678") else {
             
             let alert = UIAlertController(title: "Incorrect login or password!", message: "\nPlease, check your login and password. Try again.\n\nDemo account: \nLogin: \"user@vk.com\"\nPassword: \"12345678\"", preferredStyle: .alert)

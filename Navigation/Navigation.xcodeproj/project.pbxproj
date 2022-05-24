@@ -25,6 +25,7 @@
 		04751BA428379AFE00046495 /* extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04751BA328379AFE00046495 /* extensions.swift */; };
 		04751BA6283812B500046495 /* protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04751BA5283812B500046495 /* protocols.swift */; };
 		04945811283991DB0048C700 /* PostDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04945810283991DB0048C700 /* PostDetailsViewController.swift */; };
+		04ADA7F8283C4CA9004B375E /* ValidatorEmail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04ADA7F7283C4CA9004B375E /* ValidatorEmail.swift */; };
 		04E9A9E8283449F8004CD155 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E9A9E7283449F8004CD155 /* Data.swift */; };
 		04E9A9EA28345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E9A9E928345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		04751BA328379AFE00046495 /* extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensions.swift; sourceTree = SOURCE_ROOT; };
 		04751BA5283812B500046495 /* protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = protocols.swift; sourceTree = SOURCE_ROOT; };
 		04945810283991DB0048C700 /* PostDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PostDetailsViewController.swift; path = Navigation/PostDetailsViewController.swift; sourceTree = SOURCE_ROOT; };
+		04ADA7F7283C4CA9004B375E /* ValidatorEmail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorEmail.swift; sourceTree = "<group>"; };
 		04E9A9E7283449F8004CD155 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		04E9A9E928345FA1004CD155 /* PhotosHorizontalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosHorizontalCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -91,6 +93,7 @@
 		0436962A2821D2BE00BF5D3E = {
 			isa = PBXGroup;
 			children = (
+				04ADA7F7283C4CA9004B375E /* ValidatorEmail.swift */,
 				04E9A9E7283449F8004CD155 /* Data.swift */,
 				04751BA328379AFE00046495 /* extensions.swift */,
 				04751BA5283812B500046495 /* protocols.swift */,
@@ -198,6 +201,7 @@
 				043696552821E55100BF5D3E /* PostViewController.swift in Sources */,
 				0436964B2821D75100BF5D3E /* TabBarViewController.swift in Sources */,
 				046163A7282BDCB700466E79 /* LogInViewController.swift in Sources */,
+				04ADA7F8283C4CA9004B375E /* ValidatorEmail.swift in Sources */,
 				04945811283991DB0048C700 /* PostDetailsViewController.swift in Sources */,
 				04073486283275AA0003E364 /* PhotosTableViewCell.swift in Sources */,
 				0407348A283302F10003E364 /* PhotosCollectionViewCell.swift in Sources */,
