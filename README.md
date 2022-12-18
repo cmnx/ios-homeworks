@@ -1,5 +1,5 @@
 # ios-homeworks
 
-<H2>Final version of the Navigation project.</H2>
+<H2>Training project</H2>
 
-<H3>All optional features were added.</H3>
+<H3>Some features were added.</H3>
